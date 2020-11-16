@@ -16,6 +16,7 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'liuchengxu/vim-which-key'
+Plug 'ap/vim-css-color'
 call plug#end()
 " }}}
 
