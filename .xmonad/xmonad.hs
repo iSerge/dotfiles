@@ -251,7 +251,7 @@ myStartupHook = do
     spawnOnce "picom &"
     spawnOnce "nm-applet &"
     spawnOnce "volumeicon &"
-    spawnOnce "trayer --edge top --align right --width 5 --margin 5 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0xeee8d5 --height 39 &"
+    spawnOnce "trayer --edge top --align right --width 10 --margin 5 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0xeee8d5 --height 39 &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
