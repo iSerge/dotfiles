@@ -49,7 +49,7 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a $myTerm
-set $myTerm alacritty
+set $myTerm ~/.local/bin/alacritty
 bindsym $mod+Return exec $myTerm
 
 # kill focused window
@@ -61,39 +61,6 @@ bindsym $mod+Shift+Return exec --no-startup-id rofi -show run
 # launch categorized menu
 # FIXME: Does'nt work in sway & ubuntu
 #bindsym $mod+' exec --no-startup-id morc_menu
-
-# Apps Launched with <SUPER> + <KEYPAD 1-9>
-bindsym $mod+KP_End exec $myTerm -e lynx -cfg=~/.lynx.cfg -lss=~/.lynx.lss http://www.distrowatch.com
-bindsym $mod+KP_Down exec $myTerm -e sh ./scripts/googler-script.sh
-bindsym $mod+KP_Page_Down exec $myTerm -e newsboat
-bindsym $mod+KP_Left exec $myTerm -e rtv
-bindsym $mod+KP_Begin exec $myTerm -e neomutt
-bindsym $mod+KP_Right exec $myTerm -e twitch-curses
-bindsym $mod+KP_Home exec $myTerm -e sh ./scripts/haxor-news.sh
-bindsym $mod+KP_Up exec $myTerm -e toot curses
-bindsym $mod+KP_Page_Up exec $myTerm -e sh ./scripts/tig-script.sh
-
-# Apps Launched with <SUPER> + <SHIFT> + <KEYPAD 1-9>
-bindsym $mod+Shift+KP_1 exec $myTerm -e vifm
-bindsym $mod+Shift+KP_2 exec $myTerm -e joplin
-bindsym $mod+Shift+KP_3 exec $myTerm -e cmus
-bindsym $mod+Shift+KP_4 exec $myTerm -e irssi
-bindsym $mod+Shift+KP_5 exec $myTerm -e rtorrent
-bindsym $mod+Shift+KP_6 exec $myTerm -e youtube-viewer
-bindsym $mod+Shift+KP_7 exec $myTerm -e ncpamixer
-bindsym $mod+Shift+KP_8 exec $myTerm -e calcurse
-bindsym $mod+Shift+KP_9 exec $myTerm -e vim /home/dt/.i3/config
-
-# Apps Launched with <SUPER> + <CTRL> + <KEYPAD 1-9>
-bindsym $mod+Ctrl+KP_End exec $myTerm -e htop
-bindsym $mod+Ctrl+KP_Down exec $myTerm -e gtop
-bindsym $mod+Ctrl+KP_Page_Down exec $myTerm -e nmon
-bindsym $mod+Ctrl+KP_Left exec $myTerm -e glances
-bindsym $mod+Ctrl+KP_Begin exec $myTerm -e s-tui
-bindsym $mod+Ctrl+KP_Right exec $myTerm -e httping -KY --draw-phase localhost
-bindsym $mod+Ctrl+KP_Home exec $myTerm -e cmatrix -C cyan
-bindsym $mod+Ctrl+KP_Up exec $myTerm -e pianobar
-bindsym $mod+Ctrl+KP_Page_Up exec $myTerm -e wopr report.xml
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -108,19 +75,6 @@ exec --no-startup-id volumeicon
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
-
-# Start Applications
-bindsym $mod+Ctrl+b exec $myTerm -e 'bmenu'
-bindsym $mod+F1 exec firefox
-bindsym $mod+F2 exec obs
-bindsym $mod+F3 exec kdenlive
-bindsym $mod+F5 exec $myTerm -e 'mocp'
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Ctrl+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # focus_follows_mouse no
 
@@ -174,7 +128,6 @@ bindsym $mod+space focus mode_toggle
 
 # toggle sticky
 # bindsym $mod+Shift+s sticky toggle
-bindsym $mod+Shift+s exec ~/.i3/i3-display-swap.sh
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -323,14 +276,16 @@ mode "resize" {
 bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; picom --config /home/dt/.config/picom/picom.conf
 exec --no-startup-id numlockx off
 exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
 # exec --no-startup-id xautolock -time 10 -locker blurlock
-exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 
 # Color palette used for the terminal ( ~/.Xresources file )
