@@ -19,6 +19,7 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'ap/vim-css-color'
 Plug 'lervag/vimtex'
 Plug 'neoclide/coc-vimtex'
+Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 " }}}
 
