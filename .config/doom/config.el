@@ -39,7 +39,10 @@
 (setq display-line-numbers-type t)
 
 ;; Including file with machine local settings
-(load-file "~/.config/doom/local.el")
+(setq local-config-file "~/.config/doom/local.el")
+(if (file-readable-p local-config-file)
+  (load-file local-config-file)
+)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
