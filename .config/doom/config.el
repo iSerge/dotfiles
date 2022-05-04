@@ -32,11 +32,11 @@
 ;; change `org-directory'. It must be set before org loads!
 ;;
 ;; Will be set in local.el file
-;;(setq org-directory "~/org/")
+;;(setq org-directory "~/org/") ;; Setting this in local config file
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; Including file with machine local settings
 (setq local-config-file "~/.config/doom/local.el")
