@@ -217,5 +217,10 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }}}
 
+" vimtex {{{
+let g:vimtex_view_method = 'zathura'
+let g:tex_flavor = 'xelatex'
+"  }}} vimtex
+
 set exrc
 
