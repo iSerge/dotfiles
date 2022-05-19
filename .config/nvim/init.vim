@@ -20,6 +20,8 @@ Plug 'ap/vim-css-color'
 Plug 'lervag/vimtex'
 Plug 'neoclide/coc-vimtex'
 Plug 'dart-lang/dart-vim-plugin'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-orgmode/orgmode'
 call plug#end()
 " }}}
 
