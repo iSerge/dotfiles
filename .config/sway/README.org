@@ -1,12 +1,53 @@
+#+title: Sway config
+#+property: header-args :tangle config
+
+* Table of contents :toc:
+- [[#required-programs][Required programs]]
+- [[#set-input-and-output][Set input and output]]
+- [[#bar-configuration][Bar configuration]]
+- [[#colors-and-fonts][Colors and fonts]]
+  - [[#color-theme-settings][Color theme settings]]
+  - [[#font-for-window-titles][Font for window titles.]]
+- [[#keybindings-configuratoin][Keybindings configuratoin]]
+- [[#start-program-launcher][Start program launcher]]
+- [[#autostart-applications][Autostart applications]]
+- [[#settings-for-i3-gaps][Settings for i3-gaps]]
+
+* Required programs
+- bemenu
+- j4-dmenu-desktop
+- waybar
+- otf-font-awesome
+- mako
+- libappindicator-gtk3
+
+* Set input and output
+
+#+begin_src text
 input * {
     xkb_layout us,ru
     xkb_options grp:ctrl_shift_toggle
 }
+#+end_src
 
+Using this configuration across multiple of coputers thus using kanshi for output configuration
+No output configuration here.
+
+* Bar configuration
+Using waybar, so essential config goes there
+
+#+begin_src text
 bar {
   swaybar_command waybar
 }
+#+end_src
 
+* Colors and fonts
+
+** Color theme settings
+
+*** Solarized theme colors
+#+begin_src text
 # Solarized colors
 set $Base03  #002B36
 set $Base02  #073642
@@ -24,15 +65,26 @@ set $Violet  #6C71C4
 set $Blue    #268BD2
 set $Cyan    #2AA198
 set $Green   #859900
+#+end_src
 
+*** Theme colors
+#+begin_src text
 # class                   border  backgr. text    indic.   child_border
   client.focused          $Orange $Base02 $Base1  $Green $Orange
   client.focused_inactive $Yellow $Base02 $Base0  $Green $Base1
   client.unfocused        $Base01 $Base03 $Base01 $Green $Base00
   client.urgent           $Red    $Base02 $Base1  $Green $Red
 
-font xft:"PragmataPro Liga" 11
+#+end_src
 
+** Font for window titles.
+#+begin_src text
+font xft:"PragmataPro Liga" 11
+#+end_src
+
+* Keybindings configuratoin
+
+#+begin_src text
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
@@ -60,7 +112,11 @@ bindsym $mod+Return exec $myTerm
 
 # kill focused window
 bindsym $mod+Shift+c kill
+#+end_src
 
+* Start program launcher
+
+#+begin_src text
 bindsym $mod+Shift+Return exec j4-dmenu-desktop --dmenu="BEMENU_BACKEND=wayland bemenu -i -l 15 -n -p Run -W 0.8 h --fn \"PragmataPro Liga 16\"" --no-generic --term=$myTerm
 
 # Screen brightness controls
@@ -262,7 +318,12 @@ mode "resize" {
 
 # Lock screen
 bindsym $mod+9 exec --no-startup-id swaylock -f -c 000000
+#+end_src
 
+* Autostart applications
+List of applications which sould autostart with sway
+
+#+begin_src text
 exec_always pkill kanshi; exec kanshi
 exec mako
 exec swayidle -w \
@@ -282,6 +343,11 @@ exec --no-startup-id nm-applet --indicator
 
 ################################################################################################
 
+#+end_src
+
+* Settings for i3-gaps
+
+#+begin_src text
 # Set inner/outer gaps
 gaps inner 5
 gaps outer -4
@@ -338,3 +404,5 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+#+end_src
