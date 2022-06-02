@@ -3,21 +3,20 @@
 * Table of contents :toc:
 - [[#configuration-file][Configuration file]]
 - [[#style-configuration][Style configuration]]
-- [[#][{]]
 
 * Configuration file
 
 #+begin_src json :tangle config
 {
-    // "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 30, // Waybar height (to be removed for auto height)
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    //"height": 20, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
+    "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/arrorwr"],
     "modules-center": ["sway/window"],
-    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "disk", "sway/language", "clock"],
+    "modules-right": ["custom/arrow1", "tray", "custom/arrow2", "idle_inhibitor", "custom/arrow1", "pulseaudio", "custom/arrow2", "disk", "custom/arrow1", "sway/language", "custom/arrow2", "clock"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -86,6 +85,18 @@
         },
         "on-click": "pavucontrol"
     },
+    "custom/arrowr": {
+        "format": "",
+        "tooltip": false
+    },
+    "custom/arrow1": {
+        "format": "",
+        "tooltip": false
+    },
+    "custom/arrow2": {
+        "format": "",
+        "tooltip": false
+    },
 }
 #+end_src
 
@@ -110,7 +121,7 @@
 @define-color cyan    #2AA198;
 @define-color green   #859900;
 
-* {
+ ,* {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: PragmataPro Liga, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
     font-size: 13px;
@@ -118,7 +129,7 @@
 
 window#waybar {
     background-color: @base3;
-    border-bottom: 3px solid @base1;
+    /*border-bottom: 3px solid @base1;*/
     color: @base0;
     transition-property: background-color;
     transition-duration: .5s;
@@ -135,7 +146,7 @@ window#waybar.empty {
 window#waybar.solo {
     background-color: #FFFFFF;
 }
-*/
+,*/
 
 window#waybar.termite {
     background-color: #3F3F3F;
@@ -148,8 +159,8 @@ window#waybar.chromium {
 
 #workspaces button {
     padding: 0 5px;
-    background-color: transparent;
-    color: #ffffff;
+    background-color: @base2;
+    color: @base0;
     /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
     /* Avoid rounded borders under each workspace name */
@@ -178,21 +189,15 @@ window#waybar.chromium {
 }
 
 #clock,
-#battery,
-#cpu,
-#memory,
 #disk,
-#temperature,
-#backlight,
 #network,
 #pulseaudio,
-#custom-media,
 #tray,
 #mode,
-#idle_inhibitor,
-#mpd {
-    padding: 0 10px;
-    color: @base1;
+#language,
+#idle_inhibitor {
+    padding: 0 1ex;
+    color: @base0;
 }
 
 #window,
@@ -211,17 +216,7 @@ window#waybar.chromium {
 }
 
 #clock {
-    background-color: @base02;
-}
-
-#battery {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-#battery.charging, #battery.plugged {
-    color: #ffffff;
-    background-color: #26A65B;
+    background-color: @base3;
 }
 
 @keyframes blink {
@@ -231,48 +226,16 @@ window#waybar.chromium {
     }
 }
 
-#battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
 label:focus {
     background-color: #000000;
 }
 
-#cpu {
-    background-color: @green;
-    color: @base01;
-}
-
-#memory {
-    background-color: @violet;
-}
-
 #disk {
-    background-color: #964B00;
-}
-
-#backlight {
-    background-color: #90b1b1;
-}
-
-#network {
-    background-color: #2980b9;
-}
-
-#network.disconnected {
-    background-color: #f53c3c;
+    background-color: @base3;
 }
 
 #pulseaudio {
-    background-color: @yellow;
-    color: @base01;
+    background-color: @base2;
 }
 
 #pulseaudio.muted {
@@ -280,30 +243,8 @@ label:focus {
     color: #2a5c45;
 }
 
-#custom-media {
-    background-color: #66cc99;
-    color: #2a5c45;
-    min-width: 100px;
-}
-
-#custom-media.custom-spotify {
-    background-color: #66cc99;
-}
-
-#custom-media.custom-vlc {
-    background-color: #ffa000;
-}
-
-#temperature {
-    background-color: #f0932b;
-}
-
-#temperature.critical {
-    background-color: #eb4d4b;
-}
-
 #tray {
-    background-color: #2980b9;
+    background-color: @base2;
 }
 
 #tray > .passive {
@@ -312,56 +253,38 @@ label:focus {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: #eb4d4b;
+    background-color: @orange;
 }
 
 #idle_inhibitor {
-    background-color: #2d3436;
+    background-color: @base3;
+    color: @base01;
 }
 
 #idle_inhibitor.activated {
-    background-color: #ecf0f1;
-    color: #2d3436;
-}
-
-#mpd {
-    background-color: #66cc99;
-    color: #2a5c45;
-}
-
-#mpd.disconnected {
-    background-color: #f53c3c;
-}
-
-#mpd.stopped {
-    background-color: #90b1b1;
-}
-
-#mpd.paused {
-    background-color: #51a37a;
+    background-color: @base3;
+    color: @orange;
 }
 
 #language {
-    background: @cyan;
-    color: @violet;
-    padding: 0 5px;
-    margin: 0 5px;
-    min-width: 16px;
+    background: @base2;
 }
 
-#keyboard-state {
-    background: #97e1ad;
-    color: #000000;
-    padding: 0 0px;
-    margin: 0 5px;
-    min-width: 16px;
+#custom-arrowr {
+    background: @base3;
+    color: @base2;
+    font-size: 17pt;
 }
 
-#keyboard-state > label {
-    padding: 0 5px;
+#custom-arrow1 {
+    background: @base3;
+    color: @base2;
+    font-size: 17pt;
 }
 
-#keyboard-state > label.locked {
-    background: rgba(0, 0, 0, 0.2);
+#custom-arrow2 {
+    background: @base2;
+    color: @base3;
+    font-size: 17pt;
 }
 #+end_src
