@@ -5,9 +5,9 @@
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/arrorwr"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["custom/arrow1", "tray", "custom/arrow2", "idle_inhibitor", "custom/arrow1", "pulseaudio", "custom/arrow2", "disk", "custom/arrow1", "sway/language", "custom/arrow2", "clock"],
+    "modules-left": ["sway/workspaces", "custom/arrow-right", "sway/mode", "custom/arrow-right"],
+    "modules-center": ["custom/arrow-left-center", "sway/window", "custom/arrow-right-center"],
+    "modules-right": ["custom/arrow-left", "tray", "custom/arrow-left", "idle_inhibitor", "custom/arrow-left", "pulseaudio", "custom/arrow-left", "disk", "custom/arrow-left", "sway/language", "custom/arrow-left", "clock"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -25,7 +25,7 @@
     //     }
     // },
     "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+        "format": "{}"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -41,7 +41,8 @@
     "clock": {
         "timezone": "Europe/Moscow",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
+        "format-alt": "{:%Y-%m-%d}",
+        "locale": "ru_RU.UTF-8"
     },
     "disk": {
         "format": "{free} ",
@@ -76,15 +77,19 @@
         },
         "on-click": "pavucontrol"
     },
-    "custom/arrowr": {
+    "custom/arrow-right": {
         "format": "",
         "tooltip": false
     },
-    "custom/arrow1": {
+    "custom/arrow-right-center": {
+        "format": "",
+        "tooltip": false
+    },
+    "custom/arrow-left": {
         "format": "",
         "tooltip": false
     },
-    "custom/arrow2": {
+    "custom/arrow-left-center": {
         "format": "",
         "tooltip": false
     },

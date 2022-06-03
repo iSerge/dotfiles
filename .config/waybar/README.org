@@ -14,9 +14,9 @@
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/arrorwr"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["custom/arrow1", "tray", "custom/arrow2", "idle_inhibitor", "custom/arrow1", "pulseaudio", "custom/arrow2", "disk", "custom/arrow1", "sway/language", "custom/arrow2", "clock"],
+    "modules-left": ["sway/workspaces", "custom/arrow-right", "sway/mode", "custom/arrow-right"],
+    "modules-center": ["custom/arrow-left-center", "sway/window", "custom/arrow-right-center"],
+    "modules-right": ["custom/arrow-left", "tray", "custom/arrow-left", "idle_inhibitor", "custom/arrow-left", "pulseaudio", "custom/arrow-left", "disk", "custom/arrow-left", "sway/language", "custom/arrow-left", "clock"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -34,7 +34,7 @@
     //     }
     // },
     "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+        "format": "{}"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -50,7 +50,8 @@
     "clock": {
         "timezone": "Europe/Moscow",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
+        "format-alt": "{:%Y-%m-%d}",
+        "locale": "ru_RU.UTF-8"
     },
     "disk": {
         "format": "{free} ",
@@ -85,15 +86,19 @@
         },
         "on-click": "pavucontrol"
     },
-    "custom/arrowr": {
+    "custom/arrow-right": {
         "format": "",
         "tooltip": false
     },
-    "custom/arrow1": {
+    "custom/arrow-right-center": {
+        "format": "",
+        "tooltip": false
+    },
+    "custom/arrow-left": {
         "format": "",
         "tooltip": false
     },
-    "custom/arrow2": {
+    "custom/arrow-left-center": {
         "format": "",
         "tooltip": false
     },
@@ -121,6 +126,10 @@
 @define-color cyan    #2AA198;
 @define-color green   #859900;
 
+@define-color darkbg  @base2;
+@define-color lightbg @base3;
+@define-color textcolor @base01;
+
  ,* {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: PragmataPro Liga, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
@@ -128,9 +137,9 @@
 }
 
 window#waybar {
-    background-color: @base3;
+    background-color: @darkbg;
     /*border-bottom: 3px solid @base1;*/
-    color: @base0;
+    color: @textcolor;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -148,19 +157,28 @@ window#waybar.solo {
 }
 ,*/
 
-window#waybar.termite {
-    background-color: #3F3F3F;
+.modules-right > widget:nth-child(4n+1) {
+    color: @lightbg;
+    background-color: @darkbg;
 }
 
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
+.modules-right > widget:nth-child(4n+2) {
+    background-color: @lightbg;
+}
+
+.modules-right > widget:nth-child(4n+3) {
+    color: @darkbg;
+    background-color: @lightbg;
+}
+
+.modules-right > widget:nth-child(4n) {
+    background-color: @darkbg;
 }
 
 #workspaces button {
     padding: 0 5px;
     background-color: @base2;
-    color: @base0;
+    color: @textcolor;
     /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
     /* Avoid rounded borders under each workspace name */
@@ -180,7 +198,7 @@ window#waybar.chromium {
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+    background-color: @red;
 }
 
 #mode {
@@ -197,10 +215,19 @@ window#waybar.chromium {
 #language,
 #idle_inhibitor {
     padding: 0 1ex;
-    color: @base0;
 }
 
-#window,
+#window {
+    background: @lightbg;
+}
+
+#custom-arrow-right-center,
+#custom-arrow-left-center {
+    background: @darkbg;
+    color: @lightbg;
+    font-size: 17pt;
+}
+
 #workspaces {
     margin: 0 4px;
 }
@@ -216,7 +243,6 @@ window#waybar.chromium {
 }
 
 #clock {
-    background-color: @base3;
 }
 
 @keyframes blink {
@@ -226,25 +252,17 @@ window#waybar.chromium {
     }
 }
 
-label:focus {
-    background-color: #000000;
-}
-
 #disk {
-    background-color: @base3;
 }
 
 #pulseaudio {
-    background-color: @base2;
 }
 
 #pulseaudio.muted {
-    background-color: #90b1b1;
-    color: #2a5c45;
+    color: @base1;
 }
 
 #tray {
-    background-color: @base2;
 }
 
 #tray > .passive {
@@ -257,34 +275,21 @@ label:focus {
 }
 
 #idle_inhibitor {
-    background-color: @base3;
-    color: @base01;
 }
 
 #idle_inhibitor.activated {
-    background-color: @base3;
     color: @orange;
 }
 
 #language {
-    background: @base2;
 }
 
-#custom-arrowr {
-    background: @base3;
-    color: @base2;
+#custom-arrow-right {
     font-size: 17pt;
 }
 
-#custom-arrow1 {
-    background: @base3;
-    color: @base2;
+#custom-arrow-left {
     font-size: 17pt;
 }
 
-#custom-arrow2 {
-    background: @base2;
-    color: @base3;
-    font-size: 17pt;
-}
 #+end_src
