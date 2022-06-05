@@ -47,6 +47,24 @@ window#waybar.solo {
 }
 */
 
+.modules-left > widget:nth-last-child(4n+1) {
+    color: @lightbg;
+    background-color: @darkbg;
+}
+
+.modules-left > widget:nth-last-child(4n+2) {
+    background-color: @lightbg;
+}
+
+.modules-left > widget:nth-last-child(4n+3) {
+    color: @darkbg;
+    background-color: @lightbg;
+}
+
+.modules-left > widget:nth-last-child(4n) {
+    background-color: @darkbg;
+}
+
 .modules-right > widget:nth-child(4n+1) {
     color: @lightbg;
     background-color: @darkbg;
@@ -65,26 +83,30 @@ window#waybar.solo {
     background-color: @darkbg;
 }
 
+#workspaces {
+    margin: 0 4px;
+}
+
 #workspaces button {
-    padding: 0 5px;
-    background-color: @base2;
     color: @textcolor;
+    padding: 0 5px;
     /* Use box-shadow instead of border so the text isn't offset */
-    box-shadow: inset 0 -3px transparent;
+    box-shadow: inset 0 -3px @green;
     /* Avoid rounded borders under each workspace name */
     border: none;
-    border-radius: 0;
+    border-radius: 3pt;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 #workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 -3px #ffffff;
+    background: alpha(@base03, 0.2);
+    box-shadow: inset 0 -3px @yellow;
 }
 
 #workspaces button.focused {
-    background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+    color: @darkbg;
+    background-color: @textcolor;
+    box-shadow: inset 0 -3px @orange;
 }
 
 #workspaces button.urgent {
@@ -92,8 +114,7 @@ window#waybar.solo {
 }
 
 #mode {
-    background-color: #64727D;
-    border-bottom: 3px solid #ffffff;
+    border-bottom: 3px solid @magenta;
 }
 
 #clock,
@@ -118,28 +139,7 @@ window#waybar.solo {
     font-size: 17pt;
 }
 
-#workspaces {
-    margin: 0 4px;
-}
-
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
-}
-
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #workspaces {
-    margin-right: 0;
-}
-
 #clock {
-}
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
 }
 
 #disk {

@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "custom/arrow-right", "sway/mode", "custom/arrow-right"],
+    "modules-left": ["sway/mode", "custom/arrow-right", "sway/workspaces", "custom/arrow-right"],
     "modules-center": ["custom/arrow-left-center", "sway/window", "custom/arrow-right-center"],
     "modules-right": ["custom/arrow-left", "tray", "custom/arrow-left", "idle_inhibitor", "custom/arrow-left", "pulseaudio", "custom/arrow-left", "disk", "custom/arrow-left", "sway/language", "custom/arrow-left", "clock"],
     // Modules configuration
