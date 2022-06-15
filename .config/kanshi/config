@@ -2,4 +2,8 @@ profile vmware-hidpi {
     output "<Unknown> <Unknown>  (Virtual-1)" mode 2880x1800 scale 2
 }
 
+profile s-terra_2_fullhd {
+    output "Unknown 2460 GJQJ7HA010920 (DP-1 via VGA)" mode 1920x1080 position 0,0
+    output "Unknown 2460 GJQJ7HA010922 (HDMI-A-2)" mode 1920x1080 position 1920,0
+}
 
