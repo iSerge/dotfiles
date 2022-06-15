@@ -20,6 +20,7 @@
 - otf-font-awesome
 - mako
 - libappindicator-gtk3
+- kanshi
 
 * Set input and output
 
