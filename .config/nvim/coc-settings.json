@@ -1,4 +1,3 @@
-
 {
     "clangd.semanticHighlighting": true,
     "languageserver":{
@@ -11,6 +10,27 @@
             "trace.server": "verbose",
             "initializationOptions": {
             }
+        },
+        "haskell":{
+            "command": "haskell-language-server-wrapper",
+            "args": ["--lsp"],
+            "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "cabal.config", "package.yaml", "hie.yaml"],
+            "filetypes": ["hs","lhs","haskell", "lhaskell"],
+            "initializationOptions": { "languageServerHaskell": {} }
         }
-    }
+    },
+    "suggest": {
+        "disableKind": true,
+        "snippetsSupport": false
+    },
+    "diagnostic": {
+        "virtualText": true,
+        "virtualTextCurrentLineOnly": false,
+        "virtualTextLines": 1,
+        "virtualTextPrefix": " --- "
+    },
+    "list.height": 20,
+    "codeLens.enable": true,
+    "coc.preferences.enableMarkdown": true,
+    "coc.preferences.jumpCommand": "tab drop"
 }
