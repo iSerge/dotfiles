@@ -47,6 +47,14 @@
 ;; This makes emacs to startup with maximized frame
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
+;; set XeTeX mode in TeX/LaTeX
+(add-hook 'LaTeX-mode-hook
+          (lambda()
+             (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+             (setq TeX-command-default "XeLaTeX")
+             (setq TeX-save-query nil)
+             (setq TeX-show-compilation t)))
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
