@@ -261,7 +261,16 @@ require("telescope").setup {
         },
     },
 }
+
+vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = bufnr, desc = 'Goto [r]eferences' })
+vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations,
+    { buffer = bufnr, desc = 'Goto [i]mplementation' })
+vim.keymap.set('n', 'gt', require('telescope.builtin').lsp_type_definitions,
+    { buffer = bufnr, desc = 'Goto [t]ype Definition' })
+
 EOF
+
+
 
 " Telescope fzf plugin
 lua require('telescope').load_extension('fzf')
