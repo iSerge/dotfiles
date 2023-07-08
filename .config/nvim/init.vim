@@ -213,7 +213,7 @@ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -235,17 +235,38 @@ set exrc
 tnoremap <silent><expr> <esc> <SID>find_proc_in_tree(b:terminal_job_pid, ['nvim', 'fzf', 'vim'], 0) ? '<esc>' : '<c-\><c-n>'
 
 " Telescope config {{{
+lua << EOF
+local actions = require("telescope.actions")
+require("telescope").setup {
+    defaults = {
+        sorting_strategy = "ascending",
+        layout_strategy = "horizontal",
+        layout_config = {
+            prompt_position = 'top',
+        },
+        mappings = {
+            i = {
+                ["<esc>"] = actions.close,
+                ["<C-a>"] = actions.toggle_selection,
+
+                ["<Tab>"] = actions.move_selection_next,
+                ["<S-Tab>"] = actions.move_selection_previous,
+
+                -- doesn't work for some reason
+                -- ["<Down>"] = actions.toggle_selection + actions.move_selection_worse,
+                -- ["<Up>"] = actions.toggle_selection + actions.move_selection_better,
+            },
+        },
+    },
+}
+EOF
 
 " Telescope fzf plugin
-lua << EOF
-require('telescope').load_extension('fzf')
-EOF
+lua require('telescope').load_extension('fzf')
 
 
 " Telescope file-browser plugin
-lua << EOF
-require('telescope').load_extension('file_browser')
-EOF
+lua require('telescope').load_extension('file_browser')
 
 "  }}} Telescope config
 
