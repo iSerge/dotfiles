@@ -225,3 +225,8 @@ let g:tex_flavor = 'xelatex'
 
 set exrc
 
+" Allow use Esc key to get into normal mode in :terminal (instead of C-\,C-n
+" sequence. Except if fzf, vim or nvim is runing in terminal.
+
+tnoremap <silent><expr> <esc> <SID>find_proc_in_tree(b:terminal_job_pid, ['nvim', 'fzf', 'vim'], 0) ? '<esc>' : '<c-\><c-n>'
+
