@@ -21,6 +21,10 @@ Plug 'lervag/vimtex'
 Plug 'neoclide/coc-vimtex'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 call plug#end()
 " }}}
 
@@ -229,4 +233,20 @@ set exrc
 " sequence. Except if fzf, vim or nvim is runing in terminal.
 
 tnoremap <silent><expr> <esc> <SID>find_proc_in_tree(b:terminal_job_pid, ['nvim', 'fzf', 'vim'], 0) ? '<esc>' : '<c-\><c-n>'
+
+" Telescope config {{{
+
+" Telescope fzf plugin
+lua << EOF
+require('telescope').load_extension('fzf')
+EOF
+
+
+" Telescope file-browser plugin
+lua << EOF
+require('telescope').load_extension('file_browser')
+EOF
+
+"  }}} Telescope config
+
 
