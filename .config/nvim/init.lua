@@ -25,15 +25,12 @@ require("lazy").setup({
     'hrsh7th/nvim-cmp',
 
     -- LSP completion source:
-    'hrsh7th/cmp-nvim-lsp',
+    { 'hrsh7th/cmp-nvim-lsp',
+        dependencies = { 'hrsh7th/cmp-nvim-lua', 'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-vsnip',
+                         'hrsh7th/cmp-path', 'hrsh7th/cmp-buffer', 'hrsh7th/vim-vsnip', },
+    },
 
     -- Useful completion sources:
-    'hrsh7th/cmp-nvim-lua',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    'hrsh7th/cmp-vsnip',
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/vim-vsnip',
 
     { 'nvim-treesitter/nvim-treesitter',
         dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
