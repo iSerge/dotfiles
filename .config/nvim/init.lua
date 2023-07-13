@@ -14,7 +14,11 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " " -- Make sure to vim.opt.`mapleader` before lazy so your mappings are correct
 
 require("lazy").setup({
-    'ishan9299/nvim-solarized-lua'
+    'ishan9299/nvim-solarized-lua',
+    { "folke/neodev.nvim", opts = {} },
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'neovim/nvim-lspconfig'
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
@@ -58,4 +62,21 @@ vim.opt.showbreak = '↪ '
 vim.opt.listchars = {tab = '▸ ', trail = '·', nbsp = '␣', extends = '⟩', precedes = '⟨'}
 vim.opt.list = true
 
+-- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+require("neodev").setup({
+  -- add any options here, or leave empty to use the default settings
+})
+
+-- Mason Setup
+require("mason").setup({
+    ui = {
+        icons = {
+            package_installed = "✔",
+            package_pending = "➡",
+            package_uninstalled = "◯",
+        },
+    }
+})
+
+require("mason-lspconfig").setup()
 
