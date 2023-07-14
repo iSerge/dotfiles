@@ -1,21 +1,21 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable', -- latest stable release
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
-vim.g.mapleader = " " -- Make sure to vim.opt.`mapleader` before lazy so your mappings are correct
-vim.g.maplocalleader = " "
+vim.g.mapleader = ' ' -- Make sure to vim.opt.`mapleader` before lazy so your mappings are correct
+vim.g.maplocalleader = ' '
 
-require("lazy").setup({
+require('lazy').setup({
     'ishan9299/nvim-solarized-lua',
-    { "folke/neodev.nvim", opts = {} },
+    { 'folke/neodev.nvim', opts = {} },
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
@@ -34,7 +34,7 @@ require("lazy").setup({
 
     { 'nvim-treesitter/nvim-treesitter',
         dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', 'nvim-treesitter/nvim-treesitter-context' },
-        build = ":TSUpdate", },
+        build = ':TSUpdate', },
 
     -- Telescope search
     'nvim-lua/plenary.nvim',
@@ -50,15 +50,18 @@ require("lazy").setup({
         end
     },
     {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
+      'folke/which-key.nvim',
+      event = 'VeryLazy',
       init = function()
         vim.o.timeout = true
         vim.o.timeoutlen = 300
       end,
       opts = { }
     },
-    { "RRethy/vim-illuminate" }, -- Highlight symbols under cursor
+    { 'RRethy/vim-illuminate' }, -- Highlight symbols under cursor
+    { 'tpope/vim-sleuth' }, -- tabstop and shiftwidth heruistics
+    { 'tpope/vim-surround' }, -- Surround text with symbols or edit surroundings
+    { 'APZelos/blamer.nvim'} , -- Git blame a'la vscode gitlens
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
@@ -79,8 +82,8 @@ vim.opt.foldlevelstart=10
 vim.opt.foldnestmax=10
 vim.opt.foldmethod= 'syntax'
 
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+--vim.opt.tabstop = 4
+--vim.opt.shiftwidth = 4
 vim.opt.smarttab = true
 vim.opt.expandtab = true
 
@@ -103,22 +106,22 @@ vim.opt.listchars = {tab = '▸ ', trail = '·', nbsp = '␣', extends = '⟩', 
 vim.opt.list = true
 
 -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
-require("neodev").setup({
+require('neodev').setup({
   -- add any options here, or leave empty to use the default settings
 })
 
 -- Mason Setup
-require("mason").setup({
+require('mason').setup({
     ui = {
         icons = {
-            package_installed = "✔",
-            package_pending = "➡",
-            package_uninstalled = "◯",
+            package_installed = '✔',
+            package_pending = '➡',
+            package_uninstalled = '◯',
         },
     }
 })
 
-require("mason-lspconfig").setup()
+require('mason-lspconfig').setup()
 
 -- LSP Diagnostics Options Setup 
 local sign = function(opts)
@@ -174,7 +177,7 @@ cmp.setup({
   -- Enable LSP snippets
   snippet = {
     expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+        vim.fn['vsnip#anonymous'](args.body)
     end,
   },
   mapping = {
@@ -223,7 +226,7 @@ cmp.setup({
 
 -- Treesitter Plugin Setup 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "lua", "rust", "toml" },
+  ensure_installed = { 'lua', 'rust', 'toml' },
   auto_install = true,
   highlight = {
     enable = true,
