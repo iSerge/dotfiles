@@ -20,8 +20,8 @@ require("lazy").setup({
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
     'simrat39/rust-tools.nvim',
-    --
-    -- Completion framework
+
+    -- Completion framework 
     'hrsh7th/nvim-cmp',
 
     -- LSP completion source:
@@ -49,7 +49,15 @@ require("lazy").setup({
             require('Comment').setup()
         end
     },
-
+    {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      init = function()
+        vim.o.timeout = true
+        vim.o.timeoutlen = 300
+      end,
+      opts = { }
+    },
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
@@ -234,10 +242,10 @@ vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Telescope
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {desc = 'Telescope find files'})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {desc = 'Telescope live grep'})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {desc = 'Telescope buffers'})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {desc = 'Telescope help tags'})
 
 require('telescope').load_extension('fzf')
 
