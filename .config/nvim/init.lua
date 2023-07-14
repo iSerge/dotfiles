@@ -61,6 +61,7 @@ require('lazy').setup({
     { 'RRethy/vim-illuminate' }, -- Highlight symbols under cursor
     { 'tpope/vim-sleuth' }, -- tabstop and shiftwidth heruistics
     { 'tpope/vim-surround' }, -- Surround text with symbols or edit surroundings
+    { 'tpope/vim-repeat' }, -- Smart repeat commands from plugins
     { 'APZelos/blamer.nvim'} , -- Git blame a'la vscode gitlens
     { 'ggandor/leap.nvim',
         config = function()
