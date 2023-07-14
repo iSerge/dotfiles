@@ -68,7 +68,16 @@ require('lazy').setup({
             require('leap').add_default_mappings()
         end
     },
-
+    {
+        'folke/todo-comments.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            require('todo-comments').setup {
+                highlight = { pattern = [[.*<(KEYWORDS)\s* ]] },
+                search = { pattern = [[\b(KEYWORDS)\b]], }
+            }
+        end
+    },
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
