@@ -45,9 +45,7 @@ require('lazy').setup({
 
     { -- Help comment code
         'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end
+        config = function() require('Comment').setup() end
     },
     {
       'folke/which-key.nvim',
@@ -64,9 +62,7 @@ require('lazy').setup({
     { 'tpope/vim-repeat' }, -- Smart repeat commands from plugins
     { 'APZelos/blamer.nvim'} , -- Git blame a'la vscode gitlens
     { 'ggandor/leap.nvim',
-        config = function()
-            require('leap').add_default_mappings()
-        end
+        config = function() require('leap').add_default_mappings() end
     },
     {
         'folke/todo-comments.nvim',
@@ -80,11 +76,12 @@ require('lazy').setup({
     },
     { 'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-        config = function()
-            require('lualine').setup()
-        end
+        config = function() require('lualine').setup() end
     },
-    { "lukas-reineke/indent-blankline.nvim" },
+    { 'lukas-reineke/indent-blankline.nvim' },
+    { 'lewis6991/gitsigns.nvim',
+        config = function () require('gitsigns').setup() end
+    },
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
