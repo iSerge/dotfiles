@@ -43,6 +43,13 @@ require("lazy").setup({
     { 'nvim-telescope/telescope-fzf-native.nvim',
         build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
 
+    { -- Help comment code
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    },
+
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
