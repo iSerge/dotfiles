@@ -58,6 +58,7 @@ require("lazy").setup({
       end,
       opts = { }
     },
+    { "RRethy/vim-illuminate" }, -- Highlight symbols under cursor
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
