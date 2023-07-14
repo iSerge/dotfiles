@@ -62,6 +62,12 @@ require('lazy').setup({
     { 'tpope/vim-sleuth' }, -- tabstop and shiftwidth heruistics
     { 'tpope/vim-surround' }, -- Surround text with symbols or edit surroundings
     { 'APZelos/blamer.nvim'} , -- Git blame a'la vscode gitlens
+    { 'ggandor/leap.nvim',
+        config = function()
+            require('leap').add_default_mappings()
+        end
+    },
+
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
