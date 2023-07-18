@@ -97,6 +97,8 @@ require('lazy').setup({
         "rcarriga/nvim-notify",
         }
     },
+    { "mfussenegger/nvim-dap" },
+    { "nvim-telescope/telescope-dap.nvim" },
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
@@ -301,6 +303,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {desc = 'Telescope buffers'})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {desc = 'Telescope help tags'})
 
 require('telescope').load_extension('fzf')
+require('telescope').load_extension('dap')
 
 require("noice").setup({
   lsp = {
@@ -321,3 +324,27 @@ require("noice").setup({
   },
 })
 
+-- dap
+local dap = require("dap")
+dap.adapters.lldb = {
+	type = 'executable',
+	command = '/usr/bin/lldb-vscode-14', -- adjust as needed, must be absolute path
+	name = 'lldb'
+}
+
+dap.configurations.cpp = {
+    {
+        name = 'Launch',
+        type = 'lldb',
+        request = 'launch',
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+    },
+}
+
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
