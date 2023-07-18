@@ -1,0 +1,31 @@
+[metadata]
+name = 'Solarized Light'
+
+[colors]
+ansi = [
+        '#073642',    # Black (Host)
+        '#DC322F',    # Red (Syntax string)
+        '#859900',    # Green (Command)
+        '#B58900',    # Yellow (Command second)
+        '#268BD2',    # Blue (Path)
+        '#D33682',    # Magenta (Syntax var)
+        '#2AA198',    # Cyan (Prompt)
+        '#EEE8D5',    # White
+]
+
+brights = [
+        '#002B36',    # Bright Black
+        '#CB4B16',    # Bright Red (Command error)
+        '#586E75',    # Bright Green (Exec)
+        '#657B83',    # Bright Yellow
+        '#839496',    # Bright Blue (Folder)
+        '#6C71C4',    # Bright Magenta
+        '#93A1A1',    # Bright Cyan
+        '#FDF6E3',    # Bright White
+]
+
+background = '#FDF6E3'  # Background
+foreground = '#657B83'  # Foreground (Text)
+
+cursor_fg = '#657B83'      # cursor
+
