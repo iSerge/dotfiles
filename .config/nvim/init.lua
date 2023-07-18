@@ -123,11 +123,11 @@ require('lazy').setup({
     { 'mfussenegger/nvim-dap' },
     { 'nvim-telescope/telescope-dap.nvim' },
     { 'APZelos/blamer.nvim' },
-    {
+    --[[ {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {},
-    },
+    }, ]]
 })
 
 vim.opt.guifont = 'PragmataPro Mono Liga Regular 15'
@@ -448,7 +448,7 @@ vim.g.blamer_relative_time = 1
 
 vim.keymap.set('n', '<leader>tb', ':BlamerToggle<CR>', { buffer = bufnr, desc = '[G]it [b]lame' })
 
--- Trouble keys setup
+--[[ -- Trouble keys setup
 vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true, desc = 'Touble toggle' })
 vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
     { silent = true, noremap = true, desc = 'Touble toggle workspace diagnostics' })
@@ -460,4 +460,4 @@ vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
 vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
     { silent = true, noremap = true, desc = 'Touble toggle quickfix' })
 vim.keymap.set("n", "xR", "<cmd>TroubleToggle lsp_references<cr>",
-    { silent = true, noremap = true, desc = 'Touble toggle lsp references' })
+    { silent = true, noremap = true, desc = 'Touble toggle lsp references' }) ]]
