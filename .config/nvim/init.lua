@@ -35,6 +35,11 @@ require('lazy').setup({
     { 'nvim-treesitter/nvim-treesitter',
         dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', 'nvim-treesitter/nvim-treesitter-context' },
         build = ':TSUpdate', },
+    {
+        'nvim-orgmode/orgmode',
+        config = function() require('orgmode').setup{} end,
+        dependencies = 'nvim-treesitter/nvim-treesitter',
+    },
 
     -- Telescope search
     'nvim-lua/plenary.nvim',
@@ -262,6 +267,7 @@ cmp.setup({
     { name = 'buffer', keyword_length = 2 },        -- source current buffer
     { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
     { name = 'calc'},                               -- source for math calculation
+    { name = 'orgmode' },                           -- Org mode completions
   },
   window = {
       completion = cmp.config.window.bordered(),
@@ -283,12 +289,14 @@ cmp.setup({
 })
 
 -- Treesitter Plugin Setup 
+require('orgmode').setup_ts_grammar()
+
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'lua', 'rust', 'toml' },
+  ensure_installed = { 'lua', 'org', 'rust', 'toml' },
   auto_install = true,
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting=false,
+    additional_vim_regex_highlighting={'org'},
   },
   ident = { enable = true },
   rainbow = {
@@ -297,6 +305,11 @@ require('nvim-treesitter.configs').setup {
     max_file_lines = nil,
   }
 }
+
+require('orgmode').setup({
+  org_agenda_files = {'~/Dropbox/Documents/org/**/*', '/mnt/f/Sync/Dropbox/Documents/org/**/*'},
+  org_default_notes_file = '~/Dropbox/org/refile.org',
+})
 
 -- Treesitter folding 
 vim.wo.foldmethod = 'expr'
@@ -398,3 +411,5 @@ require('gitsigns').setup{
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {desc = 'Gitsigns select hunk'})
   end
 }
+
+
