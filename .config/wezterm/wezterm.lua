@@ -16,6 +16,9 @@ config.font = wezterm.font_with_fallback {
 
 config.font_size = 14.0
 
+config.initial_rows = 40
+config.initial_cols = 120
+
 print("Test")
 
 return config
