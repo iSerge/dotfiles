@@ -68,9 +68,17 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  -- Git blame a'la vscode gitlens
+  'APZelos/blamer.nvim',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+  -- Surround text with symbols or edit surroundings
+  'tpope/vim-surround',
+  -- Smart repeat commands from plugins
+  'tpope/vim-repeat',
+  -- Highlight symbols under cursor
+  'RRethy/vim-illuminate',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -102,6 +110,7 @@ require('lazy').setup({
 
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
@@ -192,6 +201,8 @@ require('lazy').setup({
       return vim.fn.executable 'make' == 1
     end,
   },
+  'mfussenegger/nvim-dap',
+  'nvim-telescope/telescope-dap.nvim',
 
   {
     -- Highlight, edit, and navigate code
@@ -223,6 +234,21 @@ require('lazy').setup({
         --   If not available, we use `mini` as the fallback
         "rcarriga/nvim-notify",
     }
+  },
+
+  {
+    'ggandor/leap.nvim',
+    config = function() require('leap').add_default_mappings() end
+  },
+  {
+    'folke/todo-comments.nvim',
+    dependencies = 'nvim-lua/plenary.nvim',
+    config = function()
+        require('todo-comments').setup {
+          highlight = { pattern = [[.*<(KEYWORDS)\s* ]] },
+          search = { pattern = [[\b(KEYWORDS)\b]], }
+        }
+    end
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -322,6 +348,7 @@ require('telescope').setup {
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'dap')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
@@ -365,7 +392,7 @@ require("noice").setup({
 require('orgmode').setup_ts_grammar()
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'markdown', 'markdown_inline', 'org', 'python', 'regex', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'bash', 'c', 'cpp', 'go', 'lua', 'markdown', 'markdown_inline', 'org', 'python', 'regex', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
   ignore_install = {},
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
