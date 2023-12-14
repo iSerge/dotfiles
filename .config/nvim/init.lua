@@ -316,6 +316,37 @@ vim.opt.list = true
 
 -- [[ Basic Keymaps ]]
 
+-- Setting some helpful window and buffers keymaps
+local wk = require('which-key')
+wk.register({
+  p = { name = '+project' },
+  w = {
+    name = '+windows',
+    w = {'<C-W>w', 'other-window'},
+    d = {'<C-W>c', 'delete-window'},
+    ['2'] = {'<C-W>v', 'layout-double-columns'},
+    h = {'<C-W>h', 'window-left'},
+    j = {'<C-W>j', 'window-below'},
+    l = {'<C-W>l', 'window-right'},
+    k = {'<C-W>k', 'window-up'},
+    H = {'<C-W>5<', 'expand-window-left'},
+    J = {'<cmd>resize +5<cr>' , 'expand-window-below'},
+    L = {'<C-W>5>', 'expand-window-right'},
+    K = {'<cmd>resize -5<cr>' , 'expand-window-up'},
+    ['='] = {'<C-W>=', 'balance-window'},
+    s = {'<C-W>s', 'split-window-below'},
+    v = {'<C-W>v', 'split-window-right'},
+  },
+  b = {
+    name = '+buffers',
+    d = {'<cmd>bp|bd #<cr>', 'delete buffer'},
+    n = {'<cmd>bn<cr>', 'next buffer'},
+    p = {'<cmd>bp<cr>', 'prev buffer'},
+  },
+
+}, { prefix = '<leader>' })
+
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -488,7 +519,7 @@ local on_attach = function(_, bufnr)
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>ps', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[P]roject [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -496,11 +527,11 @@ local on_attach = function(_, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
+  nmap('<leader>pa', vim.lsp.buf.add_workspace_folder, '[P]roject [A]dd Folder')
+  nmap('<leader>pr', vim.lsp.buf.remove_workspace_folder, '[P]roject [R]emove Folder')
+  nmap('<leader>pl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
+  end, '[P]roject [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
