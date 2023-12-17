@@ -204,6 +204,10 @@ require('lazy').setup({
     end,
   },
   'mfussenegger/nvim-dap',
+  {
+    'rcarriga/nvim-dap-ui',
+    dependencies = { 'mfussenegger/nvim-dap' },
+  },
   'nvim-telescope/telescope-dap.nvim',
 
   {
@@ -319,7 +323,18 @@ vim.opt.list = true
 -- Setting some helpful window and buffers keymaps
 local wk = require('which-key')
 wk.register({
-  p = { name = '+project' },
+  g = {
+    name = '+git',
+    ['1'] = "which_key_ignore",
+  },
+  p = {
+    name = '+project',
+    ['1'] = "which_key_ignore",
+  },
+  l = {
+    name = '+lsp',
+    ['1'] = "which_key_ignore",
+  },
   w = {
     name = '+windows',
     w = {'<C-W>w', 'other-window'},
@@ -343,7 +358,6 @@ wk.register({
     n = {'<cmd>bn<cr>', 'next buffer'},
     p = {'<cmd>bp<cr>', 'prev buffer'},
   },
-
 }, { prefix = '<leader>' })
 
 
@@ -632,6 +646,66 @@ cmp.setup {
     { name = 'pandoc_references' },
   },
 }
+
+-- Setup DAP configuration
+local dap=require('dap')
+dap.set_log_level('TRACE')
+dap.adapters.cppdbg = {
+  type = 'executable',
+  command = vim.fn.stdpath('data') .. '/mason/bin/OpenDebugAD7',
+  args = {},
+  attach = {
+    pidProperty = 'processId',
+    pidSelect = 'ask',
+  },
+}
+-- DAP signs
+-- vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
+-- vim.fn.sign_define('DapBreakpointCondition', {text='❓', texthl='', linehl='', numhl=''})
+-- vim.fn.sign_define('DapLogPoint', {text='🧧', texthl='', linehl='', numhl=''})
+-- vim.fn.sign_define('DapBreakpointRejected', {text='🚫', texthl='', linehl='', numhl=''})
+-- vim.fn.sign_define('DapStopped', {text='🟢', texthl='', linehl='', numhl=''})
+
+-- Setup DAP config by VsCode launch.json file
+require("dap.ext.vscode").load_launchjs(nil, { cppdbg = {'c', 'cpp', 'h'} })
+
+-- Setup DAP keymaps
+local dap_continue = function ()
+  if vim.fn.filereadable('.vscode/launch.json') then
+    require('dap.ext.vscode').load_launchjs(nil, { cppdbg = {'c', 'cpp', 'h'} })
+  else
+    vim.print('.vscode/launch.json not found')
+  end
+  require('dap').continue()
+end
+
+wk.register({
+  d = {
+    name = '+debug',
+    b = {"<cmd>lua require'dap'.toggle_breakpoint()<cr>", 'DAP: Toggle breakpoint'},
+    B = {"<cmd>lua require'dap'.set_breakpoint()<cr>", 'DAP: Set breakpoint'},
+    l = {"<cmd>lua require'dap'.set_breakpoint(nil,nil,vim.fn.input('Log point message: '))<cr>", 'DAP: Set log breakpoint'},
+    C = {"<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", 'DAP: Set conditional breakpoint'},
+    L = {"<cmd>lua require'dap'.list_breakpoints()<cr>", 'DAP: List breakpoints'},
+    n = {"<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue'},
+    ['<F5>'] = {"<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue'},
+    ['<F10>'] = {"<cmd>lua require'dap'.step_over()<cr>", 'DAP: Step over'},
+    ['<F11>'] = {"<cmd>lua require'dap'.step_into()<cr>", 'DAP: Step into'},
+    ['<F12>'] = {"<cmd>lua require'dap'.step_out()<cr>", 'DAP: Step out'},
+    ["_"] = {"<cmd>lua require'dap'.run_last()<cr>", 'DAP: Run last'},
+    r = {"<cmd>lua require'dap'.repl.open({}, 'vsplit')<cr>", 'DAP: REPL'},
+    -- noremap di
+    -- vnoremap di
+    ["?"] = {"<cmd>lua require'dap'.ui.variables.scopes()<cr>", 'DAP: Variable scopes'},
+    e = {"<cmd>lua require'dap'.set_exception_breakpoints({'all'})<cr>", 'DAP: Set exception breakpoints'},
+    a = {"<cmd>lua require'debugHelper'.attach()<cr>", "DAP: Attach"}, -- Custom function in module debugHelper
+    c = {dap_continue, "DAP: My continue"}, -- Custom wrapper around dap.continue
+    h = {function() require('dap.ui.widgets').hover() end, 'DAP: Hover'},
+    p = {function() require('dap.ui.widgets').preview() end, 'DAP: Preview'},
+    f = {function() local widgets = require('dap.ui.widgets'); widgets.centered_float(widgets.frames) end, 'DAP: Frames'},
+    s = {function() local widgets = require('dap.ui.widgets'); widgets.centered_float(widgets.scopes) end, 'DAP: Scopes'},
+  },
+}, { prefix = '<leader>' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
