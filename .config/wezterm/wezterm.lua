@@ -14,7 +14,7 @@ config.font = wezterm.font_with_fallback {
   'PragmatePro Mono Liga',
 }
 
-config.font_size = 14.0
+config.font_size = 15.0
 
 config.initial_rows = 40
 config.initial_cols = 120
