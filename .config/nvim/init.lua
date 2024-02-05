@@ -620,7 +620,7 @@ vim.api.nvim_create_autocmd({'BufWritePost'}, {
 require("conform").setup({
   formatters_by_ft = {
     lua = { 'stylua' },
-    cpp = { 'clang-format' },
+    cpp = { 'clang_format' },
     cmake = { 'cmake_format' },
   },
 })
