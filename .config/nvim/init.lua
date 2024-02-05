@@ -100,6 +100,13 @@ require('lazy').setup({
     },
   },
 
+  'mfussenegger/nvim-lint',
+
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
+
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -596,6 +603,34 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+require('lint').linters_by_ft = {
+  markdown = {'vale',},
+  cpp = {'clangtidy','clazy'},
+  cmake = {'cmakelint'},
+}
+
+vim.api.nvim_create_autocmd({'BufWritePost'}, {
+  pattern = "*",
+  callback = function ()
+    require('lint').try_lint()
+  end
+})
+
+require("conform").setup({
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    cpp = { 'clang-format' },
+    cmake = { 'cmake_format' },
+  },
+})
+
+vim.api.nvim_create_autocmd({'BufWritePost'}, {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
+})
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
