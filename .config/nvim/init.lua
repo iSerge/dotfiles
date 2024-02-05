@@ -44,16 +44,16 @@ vim.g.maplocalleader = ' '
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
+  vim.fn.system({
     'git',
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
     '--branch=stable', -- latest stable release
     lazypath,
-  }
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -140,9 +140,24 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
-        vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
-        vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
+        vim.keymap.set(
+          'n',
+          '<leader>gp',
+          require('gitsigns').prev_hunk,
+          { buffer = bufnr, desc = '[G]o to [P]revious Hunk' }
+        )
+        vim.keymap.set(
+          'n',
+          '<leader>gn',
+          require('gitsigns').next_hunk,
+          { buffer = bufnr, desc = '[G]o to [N]ext Hunk' }
+        )
+        vim.keymap.set(
+          'n',
+          '<leader>ph',
+          require('gitsigns').preview_hunk,
+          { buffer = bufnr, desc = '[P]review [H]unk' }
+        )
       end,
     },
   },
@@ -152,7 +167,7 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.opt.background = 'light'
-      vim.cmd.colorscheme 'solarized'
+      vim.cmd.colorscheme('solarized')
     end,
   },
 
@@ -168,7 +183,7 @@ require('lazy').setup({
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons',},
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- See `:help lualine.txt`
     opts = {
       options = {
@@ -207,7 +222,7 @@ require('lazy').setup({
     --       refer to the README for telescope-fzf-native for more instructions.
     build = 'make',
     cond = function()
-      return vim.fn.executable 'make' == 1
+      return vim.fn.executable('make') == 1
     end,
   },
   'mfussenegger/nvim-dap',
@@ -228,40 +243,44 @@ require('lazy').setup({
   },
 
   {
-      'nvim-orgmode/orgmode',
-      config = function() require('orgmode').setup {} end,
-      dependencies = 'nvim-treesitter/nvim-treesitter',
+    'nvim-orgmode/orgmode',
+    config = function()
+      require('orgmode').setup({})
+    end,
+    dependencies = 'nvim-treesitter/nvim-treesitter',
   },
 
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
     opts = {
-        -- add any options here
+      -- add any options here
     },
     dependencies = {
-        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-        'MunifTanjim/nui.nvim',
-        -- OPTIONAL:
-        --   `nvim-notify` is only needed, if you want to use the notification view.
-        --   If not available, we use `mini` as the fallback
-        "rcarriga/nvim-notify",
-    }
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      'MunifTanjim/nui.nvim',
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      'rcarriga/nvim-notify',
+    },
   },
 
   {
     'ggandor/leap.nvim',
-    config = function() require('leap').add_default_mappings() end
+    config = function()
+      require('leap').add_default_mappings()
+    end,
   },
   {
     'folke/todo-comments.nvim',
     dependencies = 'nvim-lua/plenary.nvim',
     config = function()
-        require('todo-comments').setup {
-          highlight = { pattern = [[.*<(KEYWORDS)\s* ]] },
-          search = { pattern = [[\b(KEYWORDS)\b]], }
-        }
-    end
+      require('todo-comments').setup({
+        highlight = { pattern = [[.*<(KEYWORDS)\s* ]] },
+        search = { pattern = [[\b(KEYWORDS)\b]] },
+      })
+    end,
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -332,41 +351,40 @@ local wk = require('which-key')
 wk.register({
   g = {
     name = '+git',
-    ['1'] = "which_key_ignore",
+    ['1'] = 'which_key_ignore',
   },
   p = {
     name = '+project',
-    ['1'] = "which_key_ignore",
+    ['1'] = 'which_key_ignore',
   },
   l = {
     name = '+lsp',
-    ['1'] = "which_key_ignore",
+    ['1'] = 'which_key_ignore',
   },
   w = {
     name = '+windows',
-    w = {'<C-W>w', 'other-window'},
-    d = {'<C-W>c', 'delete-window'},
-    ['2'] = {'<C-W>v', 'layout-double-columns'},
-    h = {'<C-W>h', 'window-left'},
-    j = {'<C-W>j', 'window-below'},
-    l = {'<C-W>l', 'window-right'},
-    k = {'<C-W>k', 'window-up'},
-    H = {'<C-W>5<', 'expand-window-left'},
-    J = {'<cmd>resize +5<cr>' , 'expand-window-below'},
-    L = {'<C-W>5>', 'expand-window-right'},
-    K = {'<cmd>resize -5<cr>' , 'expand-window-up'},
-    ['='] = {'<C-W>=', 'balance-window'},
-    s = {'<C-W>s', 'split-window-below'},
-    v = {'<C-W>v', 'split-window-right'},
+    w = { '<C-W>w', 'other-window' },
+    d = { '<C-W>c', 'delete-window' },
+    ['2'] = { '<C-W>v', 'layout-double-columns' },
+    h = { '<C-W>h', 'window-left' },
+    j = { '<C-W>j', 'window-below' },
+    l = { '<C-W>l', 'window-right' },
+    k = { '<C-W>k', 'window-up' },
+    H = { '<C-W>5<', 'expand-window-left' },
+    J = { '<cmd>resize +5<cr>', 'expand-window-below' },
+    L = { '<C-W>5>', 'expand-window-right' },
+    K = { '<cmd>resize -5<cr>', 'expand-window-up' },
+    ['='] = { '<C-W>=', 'balance-window' },
+    s = { '<C-W>s', 'split-window-below' },
+    v = { '<C-W>v', 'split-window-right' },
   },
   b = {
     name = '+buffers',
-    d = {'<cmd>bp|bd #<cr>', 'delete buffer'},
-    n = {'<cmd>bn<cr>', 'next buffer'},
-    p = {'<cmd>bp<cr>', 'prev buffer'},
+    d = { '<cmd>bp|bd #<cr>', 'delete buffer' },
+    n = { '<cmd>bn<cr>', 'next buffer' },
+    p = { '<cmd>bp<cr>', 'prev buffer' },
   },
 }, { prefix = '<leader>' })
-
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -389,7 +407,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('telescope').setup {
+require('telescope').setup({
   defaults = {
     mappings = {
       i = {
@@ -398,7 +416,7 @@ require('telescope').setup {
       },
     },
   },
-}
+})
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -409,10 +427,10 @@ vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc =
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
     winblend = 10,
     previewer = false,
-  })
+  }))
 end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
@@ -422,31 +440,47 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
-require("noice").setup({
-    lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
-        },
+require('noice').setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true,
     },
-    -- you can enable a preset for easier configuration
-    presets = {
-        bottom_search = true,         -- use a classic bottom cmdline for search
-        command_palette = true,       -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false,       -- add a border to hover docs and signature help
-    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
 })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('orgmode').setup_ts_grammar()
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.configs').setup({
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'bash', 'c', 'cpp', 'go', 'lua', 'markdown', 'markdown_inline', 'org', 'python', 'regex', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = {
+    'bash',
+    'c',
+    'cpp',
+    'go',
+    'lua',
+    'markdown',
+    'markdown_inline',
+    'org',
+    'python',
+    'regex',
+    'rust',
+    'tsx',
+    'typescript',
+    'vimdoc',
+    'vim',
+  },
   ignore_install = {},
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -507,7 +541,7 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
-}
+})
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -588,36 +622,36 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
+local mason_lspconfig = require('mason-lspconfig')
 
-mason_lspconfig.setup {
+mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
-}
+})
 
-mason_lspconfig.setup_handlers {
+mason_lspconfig.setup_handlers({
   function(server_name)
-    require('lspconfig')[server_name].setup {
+    require('lspconfig')[server_name].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       settings = servers[server_name],
-    }
+    })
   end,
-}
-
-require('lint').linters_by_ft = {
-  markdown = {'vale',},
-  cpp = {'clangtidy','clazy'},
-  cmake = {'cmakelint'},
-}
-
-vim.api.nvim_create_autocmd({'BufWritePost'}, {
-  pattern = "*",
-  callback = function ()
-    require('lint').try_lint()
-  end
 })
 
-require("conform").setup({
+require('lint').linters_by_ft = {
+  markdown = { 'vale' },
+  cpp = { 'clangtidy', 'clazy' },
+  cmake = { 'cmakelint' },
+}
+
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  pattern = '*',
+  callback = function()
+    require('lint').try_lint()
+  end,
+})
+
+require('conform').setup({
   formatters_by_ft = {
     lua = { 'stylua' },
     cpp = { 'clang_format' },
@@ -625,36 +659,36 @@ require("conform").setup({
   },
 })
 
-vim.api.nvim_create_autocmd({'BufWritePost'}, {
-  pattern = "*",
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  pattern = '*',
   callback = function(args)
-    require("conform").format({ bufnr = args.buf })
+    require('conform').format({ bufnr = args.buf })
   end,
 })
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
+luasnip.config.setup({})
 
-cmp.setup {
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
   },
-  mapping = cmp.mapping.preset.insert {
+  mapping = cmp.mapping.preset.insert({
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<C-Space>'] = cmp.mapping.complete({}),
+    ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
+    }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -673,17 +707,17 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-  },
+  }),
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'orgmode' },
     { name = 'pandoc_references' },
   },
-}
+})
 
 -- Setup DAP configuration
-local dap=require('dap')
+local dap = require('dap')
 dap.set_log_level('TRACE')
 dap.adapters.cppdbg = {
   type = 'executable',
@@ -702,12 +736,12 @@ dap.adapters.cppdbg = {
 -- vim.fn.sign_define('DapStopped', {text='🟢', texthl='', linehl='', numhl=''})
 
 -- Setup DAP config by VsCode launch.json file
-require("dap.ext.vscode").load_launchjs(nil, { cppdbg = {'c', 'cpp', 'h'} })
+require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp', 'h' } })
 
 -- Setup DAP keymaps
-local dap_continue = function ()
+local dap_continue = function()
   if vim.fn.filereadable('.vscode/launch.json') then
-    require('dap.ext.vscode').load_launchjs(nil, { cppdbg = {'c', 'cpp', 'h'} })
+    require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp', 'h' } })
   else
     vim.print('.vscode/launch.json not found')
   end
@@ -717,28 +751,56 @@ end
 wk.register({
   d = {
     name = '+debug',
-    b = {"<cmd>lua require'dap'.toggle_breakpoint()<cr>", 'DAP: Toggle breakpoint'},
-    B = {"<cmd>lua require'dap'.set_breakpoint()<cr>", 'DAP: Set breakpoint'},
-    l = {"<cmd>lua require'dap'.set_breakpoint(nil,nil,vim.fn.input('Log point message: '))<cr>", 'DAP: Set log breakpoint'},
-    C = {"<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", 'DAP: Set conditional breakpoint'},
-    L = {"<cmd>lua require'dap'.list_breakpoints()<cr>", 'DAP: List breakpoints'},
-    n = {"<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue'},
-    ['<F5>'] = {"<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue'},
-    ['<F10>'] = {"<cmd>lua require'dap'.step_over()<cr>", 'DAP: Step over'},
-    ['<F11>'] = {"<cmd>lua require'dap'.step_into()<cr>", 'DAP: Step into'},
-    ['<F12>'] = {"<cmd>lua require'dap'.step_out()<cr>", 'DAP: Step out'},
-    ["_"] = {"<cmd>lua require'dap'.run_last()<cr>", 'DAP: Run last'},
-    r = {"<cmd>lua require'dap'.repl.open({}, 'vsplit')<cr>", 'DAP: REPL'},
+    b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", 'DAP: Toggle breakpoint' },
+    B = { "<cmd>lua require'dap'.set_breakpoint()<cr>", 'DAP: Set breakpoint' },
+    l = {
+      "<cmd>lua require'dap'.set_breakpoint(nil,nil,vim.fn.input('Log point message: '))<cr>",
+      'DAP: Set log breakpoint',
+    },
+    C = {
+      "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
+      'DAP: Set conditional breakpoint',
+    },
+    L = { "<cmd>lua require'dap'.list_breakpoints()<cr>", 'DAP: List breakpoints' },
+    n = { "<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue' },
+    ['<F5>'] = { "<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue' },
+    ['<F10>'] = { "<cmd>lua require'dap'.step_over()<cr>", 'DAP: Step over' },
+    ['<F11>'] = { "<cmd>lua require'dap'.step_into()<cr>", 'DAP: Step into' },
+    ['<F12>'] = { "<cmd>lua require'dap'.step_out()<cr>", 'DAP: Step out' },
+    ['_'] = { "<cmd>lua require'dap'.run_last()<cr>", 'DAP: Run last' },
+    r = { "<cmd>lua require'dap'.repl.open({}, 'vsplit')<cr>", 'DAP: REPL' },
     -- noremap di
     -- vnoremap di
-    ["?"] = {"<cmd>lua require'dap'.ui.variables.scopes()<cr>", 'DAP: Variable scopes'},
-    e = {"<cmd>lua require'dap'.set_exception_breakpoints({'all'})<cr>", 'DAP: Set exception breakpoints'},
-    a = {"<cmd>lua require'debugHelper'.attach()<cr>", "DAP: Attach"}, -- Custom function in module debugHelper
-    c = {dap_continue, "DAP: My continue"}, -- Custom wrapper around dap.continue
-    h = {function() require('dap.ui.widgets').hover() end, 'DAP: Hover'},
-    p = {function() require('dap.ui.widgets').preview() end, 'DAP: Preview'},
-    f = {function() local widgets = require('dap.ui.widgets'); widgets.centered_float(widgets.frames) end, 'DAP: Frames'},
-    s = {function() local widgets = require('dap.ui.widgets'); widgets.centered_float(widgets.scopes) end, 'DAP: Scopes'},
+    ['?'] = { "<cmd>lua require'dap'.ui.variables.scopes()<cr>", 'DAP: Variable scopes' },
+    e = { "<cmd>lua require'dap'.set_exception_breakpoints({'all'})<cr>", 'DAP: Set exception breakpoints' },
+    a = { "<cmd>lua require'debugHelper'.attach()<cr>", 'DAP: Attach' }, -- Custom function in module debugHelper
+    c = { dap_continue, 'DAP: My continue' }, -- Custom wrapper around dap.continue
+    h = {
+      function()
+        require('dap.ui.widgets').hover()
+      end,
+      'DAP: Hover',
+    },
+    p = {
+      function()
+        require('dap.ui.widgets').preview()
+      end,
+      'DAP: Preview',
+    },
+    f = {
+      function()
+        local widgets = require('dap.ui.widgets')
+        widgets.centered_float(widgets.frames)
+      end,
+      'DAP: Frames',
+    },
+    s = {
+      function()
+        local widgets = require('dap.ui.widgets')
+        widgets.centered_float(widgets.scopes)
+      end,
+      'DAP: Scopes',
+    },
   },
 }, { prefix = '<leader>' })
 
