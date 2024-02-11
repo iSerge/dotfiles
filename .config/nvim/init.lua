@@ -642,7 +642,23 @@ require('lint').linters_by_ft = {
   markdown = { 'vale' },
   cpp = { 'clangtidy', 'clazy' },
   cmake = { 'cmakelint' },
+  css = { 'stylelint' },
+  typescript = { 'biomejs' },
+  javascript = { 'biomejs' },
+  javascriptreact = { 'biomejs' },
+  json = { 'biomejs' },
+  jsonc = { 'biomejs' },
+  typescriptreact = { 'biomejs' },
 }
+
+local clangtidy = require('lint.linters.clangtidy')
+table.insert(clangtidy.args, '-p')
+table.insert(clangtidy.args, 'build')
+
+local clazy = require('lint.linters.clazy')
+table.insert(clazy.args, '-checks=level2')
+table.insert(clazy.args, '-p')
+table.insert(clazy.args, 'build')
 
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   pattern = '*',
@@ -656,6 +672,13 @@ require('conform').setup({
     lua = { 'stylua' },
     cpp = { 'clang_format' },
     cmake = { 'cmake_format' },
+    css = { 'prettier' },
+    typescript = { 'biome' },
+    javascript = { 'biome' },
+    javascriptreact = { 'biome' },
+    json = { 'biome' },
+    jsonc = { 'biome' },
+    typescriptreact = { 'biome' },
   },
 })
 
