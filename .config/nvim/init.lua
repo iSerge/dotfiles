@@ -244,10 +244,14 @@ require('lazy').setup({
 
   {
     'nvim-orgmode/orgmode',
+    event = 'VeryLazy',
     config = function()
-      require('orgmode').setup({})
+      require('orgmode').setup({
+        org_agenda_files = '~/Dropbox/Documents/org/**/*',
+        org_default_notes_file = '~/Dropbox/Documents/org/refile.org',
+      })
     end,
-    dependencies = 'nvim-treesitter/nvim-treesitter',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', lazy = true },
   },
 
   {
