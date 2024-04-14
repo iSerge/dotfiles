@@ -654,6 +654,7 @@ require('lint').linters_by_ft = {
   json = { 'biomejs' },
   jsonc = { 'biomejs' },
   typescriptreact = { 'biomejs' },
+  python = { 'pylint' },
 }
 
 local clangtidy = require('lint.linters.clangtidy')
@@ -684,6 +685,7 @@ require('conform').setup({
     json = { 'biome' },
     jsonc = { 'biome' },
     typescriptreact = { 'biome' },
+    python = { 'black' },
   },
 })
 
