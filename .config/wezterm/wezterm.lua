@@ -20,6 +20,8 @@ config.font_size = 15.0
 config.initial_rows = 40
 config.initial_cols = 120
 
+config.warn_about_missing_glyphs = false
+
 -- Activate tabs 1 to 8 with C+A+n or Fn keys
 config.keys = {}
 for i = 1, 8 do
@@ -64,3 +66,5 @@ config.keys = {
 
 return config
 
+-- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et

@@ -686,6 +686,7 @@ require('conform').setup({
     jsonc = { 'biome' },
     typescriptreact = { 'biome' },
     python = { 'black' },
+    rust = { 'rustfmt' },
   },
 })
 

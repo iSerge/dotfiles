@@ -152,7 +152,7 @@ screens = [
                 widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # widget.Systray(), # Not compatible with Wayland
                 widget.StatusNotifier(),
-                widget.Clock(format="%Y.%m.%d %a %H:%M"),
+                widget.Clock(format="%Y.%MM.%d %a %H:%M"),
                 widget.QuickExit(),
             ],
             48,
