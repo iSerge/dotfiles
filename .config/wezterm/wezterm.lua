@@ -12,7 +12,7 @@ config.color_scheme = 'Solarized Light (Gogh)'
 
 config.font = wezterm.font_with_fallback {
   'PragmataProMonoLiga Nerd Font',
-  'PragmatePro Mono Liga',
+  'PragmataPro Mono Liga',
 }
 
 config.font_size = 15.0
