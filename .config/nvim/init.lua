@@ -467,7 +467,7 @@ require('noice').setup({
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
-require('orgmode').setup_ts_grammar()
+--require('orgmode').setup_ts_grammar() -- Obsolete in modern orgmode plugin
 require('nvim-treesitter.configs').setup({
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = {
