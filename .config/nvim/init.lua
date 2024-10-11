@@ -196,6 +196,21 @@ require('lazy').setup({
   },
 
   {
+    'echasnovski/mini.icons',
+    opts = {},
+    lazy = true,
+    specs = {
+      { 'nvim-tree/nvim-web-devicons', enabled = false, optional = true },
+    },
+    init = function()
+      package.preload['nvim-web-devicons'] = function()
+        require('mini.icons').mock_nvim_web_devicons()
+        return package.loaded['nvim-web-devicons']
+      end
+    end,
+  },
+
+  {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
@@ -352,43 +367,30 @@ vim.opt.list = true
 
 -- Setting some helpful window and buffers keymaps
 local wk = require('which-key')
-wk.register({
-  g = {
-    name = '+git',
-    ['1'] = 'which_key_ignore',
-  },
-  p = {
-    name = '+project',
-    ['1'] = 'which_key_ignore',
-  },
-  l = {
-    name = '+lsp',
-    ['1'] = 'which_key_ignore',
-  },
-  w = {
-    name = '+windows',
-    w = { '<C-W>w', 'other-window' },
-    d = { '<C-W>c', 'delete-window' },
-    ['2'] = { '<C-W>v', 'layout-double-columns' },
-    h = { '<C-W>h', 'window-left' },
-    j = { '<C-W>j', 'window-below' },
-    l = { '<C-W>l', 'window-right' },
-    k = { '<C-W>k', 'window-up' },
-    H = { '<C-W>5<', 'expand-window-left' },
-    J = { '<cmd>resize +5<cr>', 'expand-window-below' },
-    L = { '<C-W>5>', 'expand-window-right' },
-    K = { '<cmd>resize -5<cr>', 'expand-window-up' },
-    ['='] = { '<C-W>=', 'balance-window' },
-    s = { '<C-W>s', 'split-window-below' },
-    v = { '<C-W>v', 'split-window-right' },
-  },
-  b = {
-    name = '+buffers',
-    d = { '<cmd>bp|bd #<cr>', 'delete buffer' },
-    n = { '<cmd>bn<cr>', 'next buffer' },
-    p = { '<cmd>bp<cr>', 'prev buffer' },
-  },
-}, { prefix = '<leader>' })
+wk.add({
+  { '<leader>g', group = '+git' },
+  { '<leader>p', group = '+project' },
+  { '<leader>l', group = '+lsp' },
+  { '<leader>w', group = '+windows' },
+  { '<leader>ww', '<C-W>w', desc = 'other-window' },
+  { '<leader>wd', '<C-W>c', desc = 'delete-window' },
+  { '<leader>w2', '<C-W>v', desc = 'layout-double-columns' },
+  { '<leader>wh', '<C-W>h', desc = 'window-left' },
+  { '<leader>wj', '<C-W>j', desc = 'window-below' },
+  { '<leader>wk', '<C-W>k', desc = 'window-up' },
+  { '<leader>wl', '<C-W>l', desc = 'window-right' },
+  { '<leader>wH', '<C-W>5<', desc = 'expand-window-left' },
+  { '<leader>wJ', '<cmd>resize +5<cr>', desc = 'expand-window-below' },
+  { '<leader>wK', '<cmd>resize -5<cr>', desc = 'expand-window-up' },
+  { '<leader>wL', '<C-W>5>', desc = 'expand-window-right' },
+  { '<leader>w=', '<C-W>=', desc = 'balance-window' },
+  { '<leader>ws', '<C-W>s', desc = 'split-window-below' },
+  { '<leader>wv', '<C-W>v', desc = 'split-window-right' },
+  { '<leader>b', group = '+buffers' },
+  { '<leader>bd', '<cmd>bp|bd #<cr>', desc = 'delete buffer' },
+  { '<leader>bn', '<cmd>bn<cr>', desc = 'next buffer' },
+  { '<leader>bp', '<cmd>bp<cr>', desc = 'prev buffer' },
+})
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -465,7 +467,7 @@ require('noice').setup({
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
-require('orgmode').setup_ts_grammar()
+--require('orgmode').setup_ts_grammar() -- Obsolete in modern orgmode plugin
 require('nvim-treesitter.configs').setup({
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = {
@@ -779,61 +781,69 @@ local dap_continue = function()
   require('dap').continue()
 end
 
-wk.register({
-  d = {
-    name = '+debug',
-    b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", 'DAP: Toggle breakpoint' },
-    B = { "<cmd>lua require'dap'.set_breakpoint()<cr>", 'DAP: Set breakpoint' },
-    l = {
-      "<cmd>lua require'dap'.set_breakpoint(nil,nil,vim.fn.input('Log point message: '))<cr>",
-      'DAP: Set log breakpoint',
-    },
-    C = {
-      "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
-      'DAP: Set conditional breakpoint',
-    },
-    L = { "<cmd>lua require'dap'.list_breakpoints()<cr>", 'DAP: List breakpoints' },
-    n = { "<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue' },
-    ['<F5>'] = { "<cmd>lua require'dap'.continue()<cr>", 'DAP: Continue' },
-    ['<F10>'] = { "<cmd>lua require'dap'.step_over()<cr>", 'DAP: Step over' },
-    ['<F11>'] = { "<cmd>lua require'dap'.step_into()<cr>", 'DAP: Step into' },
-    ['<F12>'] = { "<cmd>lua require'dap'.step_out()<cr>", 'DAP: Step out' },
-    ['_'] = { "<cmd>lua require'dap'.run_last()<cr>", 'DAP: Run last' },
-    r = { "<cmd>lua require'dap'.repl.open({}, 'vsplit')<cr>", 'DAP: REPL' },
-    -- noremap di
-    -- vnoremap di
-    ['?'] = { "<cmd>lua require'dap'.ui.variables.scopes()<cr>", 'DAP: Variable scopes' },
-    e = { "<cmd>lua require'dap'.set_exception_breakpoints({'all'})<cr>", 'DAP: Set exception breakpoints' },
-    a = { "<cmd>lua require'debugHelper'.attach()<cr>", 'DAP: Attach' }, -- Custom function in module debugHelper
-    c = { dap_continue, 'DAP: My continue' }, -- Custom wrapper around dap.continue
-    h = {
-      function()
-        require('dap.ui.widgets').hover()
-      end,
-      'DAP: Hover',
-    },
-    p = {
-      function()
-        require('dap.ui.widgets').preview()
-      end,
-      'DAP: Preview',
-    },
-    f = {
-      function()
-        local widgets = require('dap.ui.widgets')
-        widgets.centered_float(widgets.frames)
-      end,
-      'DAP: Frames',
-    },
-    s = {
-      function()
-        local widgets = require('dap.ui.widgets')
-        widgets.centered_float(widgets.scopes)
-      end,
-      'DAP: Scopes',
-    },
+wk.add({
+  { '<leader>d', group = '+debug' },
+  { '<leader>db', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = 'DAP: Toggle breakpoint' },
+  { '<leader>dB', "<cmd>lua require'dap'.set_breakpoint()<cr>", desc = 'DAP: Set breakpoint' },
+  {
+    '<leader>dl',
+    "<cmd>lua require'dap'.set_breakpoint(nil,nil,vim.fn.input('Log point message: '))<cr>",
+    desc = 'DAP: Set log breakpoint',
   },
-}, { prefix = '<leader>' })
+  {
+    '<leader>dC',
+    "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
+    desc = 'DAP: Set conditional breakpoint',
+  },
+  { '<leader>dL', "<cmd>lua require'dap'.list_breakpoints()<cr>", desc = 'DAP: List breakpoints' },
+  { '<leader>dn', "<cmd>lua require'dap'.continue()<cr>", desc = 'DAP: Continue' },
+  { '<leader>d<F5>', "<cmd>lua require'dap'.continue()<cr>", desc = 'DAP: Continue' },
+  { '<leader>d<F10>', "<cmd>lua require'dap'.step_over()<cr>", desc = 'DAP: Step over' },
+  { '<leader>d<F11>', "<cmd>lua require'dap'.step_into()<cr>", desc = 'DAP: Step into' },
+  { '<leader>d<F12>', "<cmd>lua require'dap'.step_out()<cr>", desc = 'DAP: Step out' },
+  { '<leader>d_', "<cmd>lua require'dap'.run_last()<cr>", desc = 'DAP: Run last' },
+  { '<leader>dr', "<cmd>lua require'dap'.repl.open({}, 'vsplit')<cr>", desc = 'DAP: REPL' },
+  -- noremap di
+  -- vnoremap di
+  { '<leader>d?', "<cmd>lua require'dap'.ui.variables.scopes()<cr>", desc = 'DAP: Variable scopes' },
+  {
+    '<leader>de',
+    "<cmd>lua require'dap'.set_exception_breakpoints({'all'})<cr>",
+    desc = 'DAP: Set exception breakpoints',
+  },
+  { '<leader>da', "<cmd>lua require'debugHelper'.attach()<cr>", desc = 'DAP: Attach' }, -- Custom function in module debugHelper
+  { '<leader>dc', dap_continue, desc = 'DAP: My continue' }, -- Custom wrapper around dap.continue
+  {
+    '<leader>dh',
+    function()
+      require('dap.ui.widgets').hover()
+    end,
+    desc = 'DAP: Hover',
+  },
+  {
+    '<leader>dp',
+    function()
+      require('dap.ui.widgets').preview()
+    end,
+    desc = 'DAP: Preview',
+  },
+  {
+    '<leader>df',
+    function()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.frames)
+    end,
+    desc = 'DAP: Frames',
+  },
+  {
+    '<leader>ds',
+    function()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.scopes)
+    end,
+    desc = 'DAP: Scopes',
+  },
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
