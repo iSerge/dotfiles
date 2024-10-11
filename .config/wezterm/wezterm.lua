@@ -15,9 +15,9 @@ config.font = wezterm.font_with_fallback {
   'PragmataPro Mono Liga',
 }
 
-config.font_size = 15.0
+config.font_size = 16.0
 
-config.initial_rows = 40
+config.initial_rows = 35
 config.initial_cols = 120
 
 config.warn_about_missing_glyphs = false
