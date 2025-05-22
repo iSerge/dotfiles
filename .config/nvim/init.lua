@@ -87,8 +87,14 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
+      { 'mason-org/mason.nvim', config = true },
+      {'mason-org/mason-lspconfig.nvim',
+        opts = {},
+        dependencies = {
+        {'mason-org/mason.nvim', opts = {}},
+        'neovim/nvim-lspconfig',
+      }
+      },
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -302,6 +308,17 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'lervag/vimtex',
+    init = function()
+      -- vim.g['vimtex_view_method'] = 'zathura'
+      vim.g['vimtex_view_general_viewer'] = 'okular'
+      vim.g['vimtex_view_general_options'] = '--unique file:@pdf\\#src:@line@tex'
+
+      vim.g['vimtex_compiler_method'] = 'latexmk'
+    end,
+  },
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -478,7 +495,6 @@ require('nvim-treesitter.configs').setup({
     'lua',
     'markdown',
     'markdown_inline',
-    'org',
     'python',
     'regex',
     'rust',
@@ -633,9 +649,7 @@ local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
-})
-
-mason_lspconfig.setup_handlers({
+  handlers = {
   function(server_name)
     require('lspconfig')[server_name].setup({
       capabilities = capabilities,
@@ -643,11 +657,13 @@ mason_lspconfig.setup_handlers({
       settings = servers[server_name],
     })
   end,
+  },
 })
 
 require('lint').linters_by_ft = {
   markdown = { 'vale' },
   cpp = { 'clangtidy', 'clazy' },
+  c = { 'clangtidy', 'clazy' },
   cmake = { 'cmakelint' },
   css = { 'stylelint' },
   typescript = { 'biomejs' },
@@ -657,6 +673,7 @@ require('lint').linters_by_ft = {
   jsonc = { 'biomejs' },
   typescriptreact = { 'biomejs' },
   python = { 'pylint' },
+  haskell = { 'hlint' },
 }
 
 local clangtidy = require('lint.linters.clangtidy')
@@ -679,6 +696,7 @@ require('conform').setup({
   formatters_by_ft = {
     lua = { 'stylua' },
     cpp = { 'clang_format' },
+    c = { 'clang_format' },
     cmake = { 'cmake_format' },
     css = { 'prettier' },
     typescript = { 'biome' },
@@ -689,6 +707,7 @@ require('conform').setup({
     typescriptreact = { 'biome' },
     python = { 'black' },
     rust = { 'rustfmt' },
+    haskell = { 'ormolu' },
   },
 })
 
